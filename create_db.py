@@ -1,4 +1,5 @@
-from app import app, db, Item
+from market import app, db
+from market.models import Item
 
 item1 = Item(name='Iphone 10', price=850, barcode='852456952623', description='desc')
 item2 = Item(name='Iphone 11', price=1000, barcode='525652145852', description='desc2')
