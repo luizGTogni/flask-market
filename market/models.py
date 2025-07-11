@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 
   @property
   def prettier_budget(self):
-     if len(str(self.budget)) >= 4 and len(str(self.budget)) < 7:
+     if len(str(self.budget)) >= 5 and len(str(self.budget)) < 7:
         return f'{int(self.budget / 1000)}K'
      
      if len(str(self.budget)) >= 7 and len(str(self.budget)) < 10:
