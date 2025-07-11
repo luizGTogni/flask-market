@@ -1,8 +1,9 @@
-from market import app, db
+from market import app, db, bcrypt
 from market.models import Item, User
 
-user1 = User(username='toogni', email_address='contato.togni@gmail.com', password_hash='1234', budget=1000)
-user2 = User(username='johndoe', email_address='johndoe@gmail.com', password_hash='1234')
+password_hash = bcrypt.generate_password_hash('12345678').decode('utf-8')
+user1 = User(username='toogni', email_address='contato.togni@gmail.com', password_hash=password_hash, budget=1000)
+user2 = User(username='johndoe', email_address='johndoe@gmail.com', password_hash=password_hash)
 
 item1 = Item(name='Iphone 10', price=850, barcode='852456952623', description='desc')
 item2 = Item(name='Iphone 11', price=1000, barcode='525652145852', description='desc2')
