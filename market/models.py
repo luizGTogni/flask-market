@@ -32,10 +32,13 @@ class User(db.Model, UserMixin):
 
   @password.setter
   def password(self, plain_text_password):
-     self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+    self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
   def check_password_correction(self, attempted_password):
     return bcrypt.check_password_hash(self.password_hash, attempted_password)
+  
+  def can_purchase(self, item_price):
+    return self.budget >= item_price
 
 class Item(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
@@ -47,3 +50,8 @@ class Item(db.Model):
 
   def __repr__(self):
         return f'Item {self.name}'
+  
+  def purchase(self, user):
+    self.owner = user.id
+    user.budget -= self.price
+    db.session.commit()
