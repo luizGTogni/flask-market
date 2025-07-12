@@ -39,6 +39,9 @@ class User(db.Model, UserMixin):
   
   def can_purchase(self, item_price):
     return self.budget >= item_price
+  
+  def can_sell(self, item):
+    return item in self.items
 
 class Item(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
@@ -54,4 +57,9 @@ class Item(db.Model):
   def purchase(self, user):
     self.owner = user.id
     user.budget -= self.price
+    db.session.commit()
+
+  def sell(self, user):
+    self.owner = None
+    user.budget += self.price
     db.session.commit()
